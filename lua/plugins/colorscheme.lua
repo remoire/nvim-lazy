@@ -15,6 +15,12 @@ return {
     dependencies = {
       "tjdevries/colorbuddy.nvim",
     },
+    opts = function()
+      require("vitesse").setup({
+        transparent_background = true,
+        transparent_float_background = true, -- aka pum(popup menu) background
+      })
+    end,
   },
   {
     "LazyVim/LazyVim",

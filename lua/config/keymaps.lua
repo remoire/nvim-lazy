@@ -1,3 +1,5 @@
+local discipline = require("craftzdog.discipline")
+discipline.cowboy()
 local keymap = vim.keymap
 
 keymap.set("v", "J", ":m '>+1<CR>gv=gv")
