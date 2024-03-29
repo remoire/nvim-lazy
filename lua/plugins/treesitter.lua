@@ -12,7 +12,6 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "windwp/nvim-ts-autotag",
     },
-
     opts = {
       ensure_installed = {
         "bash",

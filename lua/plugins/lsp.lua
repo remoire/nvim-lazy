@@ -1,15 +1,48 @@
 return {
+
+  -- Java development
+  {
+    "nvim-java/nvim-java",
+    dependencies = {
+      "nvim-java/lua-async-await",
+      "nvim-java/nvim-java-core",
+      "nvim-java/nvim-java-test",
+      "nvim-java/nvim-java-dap",
+      "MunifTanjim/nui.nvim",
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-dap",
+      {
+        "williamboman/mason.nvim",
+        opts = {
+          registries = {
+            "github:nvim-java/mason-registry",
+            "github:mason-org/mason-registry",
+          },
+        },
+      },
+    },
+  },
+
   {
     "williamboman/mason.nvim",
+
     opts = {
       ensure_installed = {
         "stylua",
         "shellcheck",
+        "luacheck",
         "shfmt",
         "flake8",
+        "selene",
+        "shfmt",
+        "tailwindcss-language-server",
+        "typescript-language-server",
+        "css-lsp",
+        "jdtls",
       },
     },
   },
+
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -23,11 +56,14 @@ return {
       end,
     },
     ---@class PluginLspOpts
+
     opts = {
       ---@type lspconfig.options
       servers = {
         -- tsserver will be automatically installed with mason and loaded with lspconfig
         tsserver = {},
+        pyright = {},
+        java = {},
       },
       -- you can do any additional lsp server setup here
       -- return true if you don't want this server to be setup with lspconfig
@@ -42,16 +78,8 @@ return {
         -- ["*"] = function(server, opts) end,
       },
     },
-  },
-  {
-    "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
-        pyright = {},
-      },
-    },
+    config = function()
+      require("lspconfig").setup({})
+    end,
   },
 }
