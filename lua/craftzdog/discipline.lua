@@ -1,5 +1,4 @@
 local M = {}
-
 function M.cowboy()
   ---@type table?
   local id
