@@ -17,3 +17,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", { pattern = "markdown", command = "set awa" })
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.norg" },
+  command = "set conceallevel=3",
+})

@@ -39,6 +39,7 @@ return {
         "graphql",
         "dockerfile",
         "scss",
+        "norg",
         "sql",
         "cpp",
       },

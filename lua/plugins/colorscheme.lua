@@ -19,7 +19,7 @@ return {
     opts = function()
       require("vitesse").setup({
         transparent_background = true,
-        transparent_float_background = true, -- aka pum(popup menu) background
+        transparent_float_background = false, -- aka pum(popup menu) background
       })
     end,
   },
