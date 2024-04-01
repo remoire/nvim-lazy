@@ -20,6 +20,12 @@ return {
       }),
     })
 
+    ls.add_snippets("pas", {
+      s("procedure", {
+        t("Procedure $name"),
+      }),
+    })
+
     vim.keymap.set({ "i" }, "<C-K>", function()
       ls.expand()
     end, { silent = true })
