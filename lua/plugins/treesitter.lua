@@ -31,6 +31,7 @@ return {
         "vimdoc",
         "gitignore",
         "c",
+        "astro",
         "java",
         "prisma",
         "svelte",
@@ -43,6 +44,8 @@ return {
         "sql",
         "cpp",
       },
+      auto_install = true,
+      highlight = { enable = true },
       autotag = { enable = true },
       indent = { enable = true },
       incremental_selection = {
