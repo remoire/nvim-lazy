@@ -6,6 +6,7 @@ return {
     "nvim-neorg/neorg",
     lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
     version = "*", -- Pin Neorg to the latest stable release
+
     enabled = true,
     ft = "norg",
     dependencies = { "luarocks.nvim", "nvim-lua/plenary.nvim" },
@@ -61,13 +62,107 @@ return {
                 notes = "~/neorg/notes",
               },
             },
+            notes,
           },
         },
       })
     end,
   },
 
+  -- H1
+  -- 1e2718
+  -- 192e26
+  -- 182221
+  -- H2
+  -- 223332
+  -- 436764
+  -- 20353d
+  -- 50958B
+  -- 3B6B78
+  -- H3
+  -- 213b2e
+  -- CAAE84
+  -- H4
+  -- B7866C
+  -- H5
+  -- D0492B
+  -- Codeblocks
+  -- 3B6B78
+  -- A98979
+
+  vim.cmd([[highlight Headline1 guibg=#1e2718]]),
+  vim.cmd([[highlight Headline2 guibg=#223332]]),
+  vim.cmd([[highlight Headline3 guibg=#213b2e]]),
+  vim.cmd([[highlight Headline4 guibg=#213b2e]]),
+  vim.cmd([[highlight Headline5 guibg=#213b2e]]),
+  vim.cmd([[highlight Headline6 guibg=#213b2e]]),
+  vim.cmd([[highlight CodeBlock guibg=#1c1c1c]]),
+  vim.cmd([[highlight Dash guibg=#D19A66 gui=bold]]),
+
   -- markdown
+  {
+    "lukas-reineke/headlines.nvim",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("headlines").setup({
+        markdown = {
+          query = vim.treesitter.query.parse(
+            "markdown",
+            [[
+                (atx_heading [
+                    (atx_h1_marker)
+                    (atx_h2_marker)
+                    (atx_h3_marker)
+                    (atx_h4_marker)
+                    (atx_h5_marker)
+                    (atx_h6_marker)
+                ] @headline)
+
+                (thematic_break) @dash
+
+                (fenced_code_block) @codeblock
+
+                (block_quote_marker) @quote
+                (block_quote (paragraph (inline (block_continuation) @quote)))
+                (block_quote (paragraph (block_continuation) @quote))
+                (block_quote (block_continuation) @quote)
+            ]]
+          ),
+          headline_highlights = { "Headline1", "Headline2" },
+          bullet_highlights = {
+            "@text.title.1.marker.markdown",
+            "@text.title.2.marker.markdown",
+            "@text.title.3.marker.markdown",
+            "@text.title.4.marker.markdown",
+            "@text.title.5.marker.markdown",
+            "@text.title.6.marker.markdown",
+          },
+          bullets = { "◉", "○", "✸", "✿" },
+          codeblock_highlight = "CodeBlock",
+          dash_highlight = "Dash",
+          dash_string = "-",
+          quote_highlight = "Quote",
+          quote_string = "┃",
+          fat_headlines = true,
+          fat_headline_upper_string = "▃",
+          fat_headline_lower_string = "🬂",
+        },
+      })
+    end,
+  },
+
+  {
+    "hedyhli/outline.nvim",
+    config = function()
+      -- Example mapping to toggle outline
+      vim.keymap.set("n", "<leader>oo", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
+
+      require("outline").setup({
+        -- Your setup opts here (leave empty to use defaults)
+      })
+    end,
+  },
+
   {
     "gaoDean/autolist.nvim",
     ft = {
@@ -78,11 +173,31 @@ return {
       "norg",
     },
     config = function()
-      require("autolist").setup({
-        lists = {
-          markdown = {},
-        },
-      })
+      require("autolist").setup()
+      -- require("autolist").setup({
+      --   enabled = true,
+      --   cycle = { -- Cycles the list type in order
+      --     "-", -- whatever you put here will match the first item in your list
+      --     "*", -- for example if your list started with a `-` it would go to `*`
+      --     "1.", -- this says that if your list starts with a `*` it would go to `1.`
+      --     "1)", -- this all leverages the power of recalculate.
+      --     "a)", -- i spent many hours on that function
+      --     "I.", -- try it, change the first bullet in a list to `a)`, and press recalculate
+      --   },
+      --   lists = {
+      --     markdown = {
+      --       list_patterns.unordered,
+      --       list_patterns.digit,
+      --       list_patterns.ascii, -- for example this specifies activate the ascii list
+      --       list_patterns.roman, -- type for markdown files.
+      --     },
+      --     checkbox = {
+      --       left = "%[", -- the left checkbox delimiter (you could change to "%(" for brackets)
+      --       right = "%]", -- the right checkbox delim (same customisation as above)
+      --       fill = "x", -- if you do the above two customisations, your checkbox could be (x) instead of [x]
+      --     },
+      --   },
+      -- })
 
       vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>")
       vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>")
@@ -176,11 +291,11 @@ return {
       )
 
       keymap.set("n", "<leader>ot", "<cmd>ObsidianTemplate<cr>", { desc = "Insert Obsidian Template" })
-      keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<cr>", { desc = "Open in Obsidian App" })
+      -- keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<cr>", { desc = "Open in Obsidian App" })
       keymap.set("n", "<leader>ob", "<cmd>ObsidianBacklinks<cr>", { desc = "Show ObsidianBacklinks" })
       keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<cr>", { desc = "Show ObsidianLinks" })
       keymap.set("n", "<leader>on", "<cmd>ObsidianNew<cr>", { desc = "Create New Note" })
-      keymap.set("n", "<leader>od", "<cmd>ObsidianToday<cr>", { desc = "Create New Note" })
+      keymap.set("n", "<leader>od", "<cmd>ObsidianToday<cr>", { desc = "Open Daily Note" })
       keymap.set("n", "<leader>of", "<cmd>ObsidianSearch<cr>", { desc = "Search Obsidian text" })
       keymap.set("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<cr>", { desc = "Quick Switch" })
 
