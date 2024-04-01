@@ -1,4 +1,5 @@
 return {
+  -- java
   { "mfussenegger/nvim-jdtls" },
   { "mfussenegger/nvim-dap", config = function() end },
   {
@@ -75,6 +76,18 @@ return {
     end,
   },
 
+  -- pascal, delphi
+  {
+    "skywind3000/asyncrun.vim", -- async make
+    "mattia72/vim-delphi", -- aligning
+    "dylanaraps/pascal_lint.nvim", -- linter
+    config = function()
+      require("vim-delphi").setup()
+      require("pascal_list.nvim").setup()
+      require("asyncrun.vim").setup()
+    end,
+  },
+
   {
     "williamboman/mason.nvim",
     opts = {
@@ -96,6 +109,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    lazy = false,
     dependencies = {
       "jose-elias-alvarez/typescript.nvim",
       init = function()
@@ -107,22 +121,31 @@ return {
       end,
     },
 
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
-        ruff = {},
-      },
-      setup = {
-        -- example to setup with typescript.nvim
-        tsserver = function(_, opts)
-          require("typescript").setup({ server = opts })
-          return true
-        end,
-        -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
-      },
-    },
+    -- config = function()
+    --   local lspconfig = require("lspconfig")
+    --   local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    --   local keymap = vim.keymap
+    --
+    --   local opts = { noremap = true, silent = true }
+    --   local capabilities = cmp_nvim_lsp.default_capabilities()
+    --
+    --   lspconfig["tailwindcss"].setup({
+    --     root_dir = function()
+    --       return require("lspconfig.util").root_pattern(".git")(...)
+    --     end,
+    --   })
+    --   lspconfig["tailwindcss"].setup({})
+    --   lspconfig["tsserver"].setup({
+    --         require("typescript").setup({ server = opts })
+    --         return true
+    --   })
+    --   lspconfig["delphi_ls"]=.setup({})
+    --   lspconfig["ruff"]=.setup({})
+    --   --     tsserver = function(_, opts)
+    --   --       require("typescript").setup({ server = opts })
+    --   --       return true
+    --   --     end,
+    -- end,
   },
 
   {
