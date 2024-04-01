@@ -27,52 +27,8 @@ return {
       require("java").setup()
 
       local lspconfig = require("lspconfig")
-
+      local lsp_helpers = require("plugins.helpers.lsp-helpers")
       lspconfig.jdtls.setup({})
-      -- python
-      lspconfig.ruff_lsp.setup({
-        on_attach = function(client, bufnr)
-          -- Enable completion triggered by <c-x><c-o>
-          vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-          -- Mappings.
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local bufopts = { noremap = true, silent = true, buffer = bufnr }
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-          vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-          vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-          vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-          vim.keymap.set("n", "<space>wl", function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, bufopts)
-          vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-          vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-          vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-          vim.keymap.set("n", "<space>f", function()
-            vim.lsp.buf.format({ async = true })
-          end, bufopts)
-        end,
-        init_options = {
-          settings = {
-            -- Any extra CLI arguments for `ruff` go here.
-            args = {},
-          },
-        },
-      })
-      -- lspconfig.stylua.setup({})
-      lspconfig.lua_ls.setup({
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-          },
-        },
-      })
     end,
   },
 
@@ -98,6 +54,7 @@ return {
         "shfmt",
         "flake8",
         "selene",
+        "astro-language-server",
         "ruff",
         "shfmt",
         "tailwindcss-language-server",
@@ -121,31 +78,52 @@ return {
       end,
     },
 
-    -- config = function()
-    --   local lspconfig = require("lspconfig")
-    --   local cmp_nvim_lsp = require("cmp_nvim_lsp")
-    --   local keymap = vim.keymap
-    --
-    --   local opts = { noremap = true, silent = true }
-    --   local capabilities = cmp_nvim_lsp.default_capabilities()
-    --
-    --   lspconfig["tailwindcss"].setup({
-    --     root_dir = function()
-    --       return require("lspconfig.util").root_pattern(".git")(...)
-    --     end,
-    --   })
-    --   lspconfig["tailwindcss"].setup({})
-    --   lspconfig["tsserver"].setup({
-    --         require("typescript").setup({ server = opts })
-    --         return true
-    --   })
-    --   lspconfig["delphi_ls"]=.setup({})
-    --   lspconfig["ruff"]=.setup({})
-    --   --     tsserver = function(_, opts)
-    --   --       require("typescript").setup({ server = opts })
-    --   --       return true
-    --   --     end,
-    -- end,
+    config = function()
+      local lspconfig = require("lspconfig")
+      local cmp_nvim_lsp = require("cmp_nvim_lsp")
+      local keymap = vim.keymap
+
+      local lsp_helpers = require("plugins.helpers.lsp-helpers")
+
+      lspconfig.tailwindcss.setup({
+        capabilities = lsp_helpers.capabilities,
+        on_attach = lsp_helpers.on_attach,
+      })
+      lspconfig.delphi_ls.setup({
+        capabilities = lsp_helpers.capabilities,
+        on_attach = lsp_helpers.on_attach,
+      })
+      lspconfig.ruff.setup({
+        capabilities = lsp_helpers.capabilities,
+        on_attach = lsp_helpers.on_attach,
+      })
+      lspconfig.ruff_lsp.setup({
+        on_attach = lsp_helpers.on_attach,
+        init_options = {
+          settings = {
+            -- Any extra CLI arguments for `ruff` go here.
+            args = {},
+          },
+        },
+      })
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+          },
+        },
+      })
+      lspconfig.tsserver.setup({
+        capabilities = lsp_helpers.capabilities,
+        on_attach = lsp_helpers.on_attach,
+      })
+      lspconfig.astro.setup({
+        capabilities = lsp_helpers.capabilities,
+        on_attach = lsp_helpers.on_attach,
+      })
+    end,
   },
 
   {
