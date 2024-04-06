@@ -262,6 +262,7 @@ return {
           template = "Daily.md",
         },
         mappings = {
+          -- Go to link
           ["gf"] = {
             action = function()
               return require("obsidian").util.gf_passthrough()
@@ -293,6 +294,8 @@ return {
       keymap.set("n", "<leader>ot", "<cmd>ObsidianTemplate<cr>", { desc = "Insert Obsidian Template" })
       -- keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<cr>", { desc = "Open in Obsidian App" })
       keymap.set("n", "<leader>ob", "<cmd>ObsidianBacklinks<cr>", { desc = "Show ObsidianBacklinks" })
+      keymap.set("n", "<leader>oy", "<cmd>ObsidianYesteday<cr>", { desc = "Open Yesterday Daily Note" })
+      keymap.set("n", "<leader>ot", "<cmd>ObsidianTomorrow<cr>", { desc = "Open Tomorrow Daily Note" })
       keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<cr>", { desc = "Show ObsidianLinks" })
       keymap.set("n", "<leader>on", "<cmd>ObsidianNew<cr>", { desc = "Create New Note" })
       keymap.set("n", "<leader>od", "<cmd>ObsidianToday<cr>", { desc = "Open Daily Note" })

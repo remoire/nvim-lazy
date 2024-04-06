@@ -20,9 +20,12 @@ return {
       }),
     })
 
-    ls.add_snippets("pas", {
+    ls.add_snippets("pascal", {
       s("procedure", {
         t("Procedure $name"),
+      }),
+      s("wln", {
+        t("writeln('')"),
       }),
     })
 
