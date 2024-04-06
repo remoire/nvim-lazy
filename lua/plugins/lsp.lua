@@ -49,17 +49,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    dependencies = {
-      "jose-elias-alvarez/typescript.nvim",
-      init = function()
-        require("lazyvim.util").lsp.on_attach(function(_, buffer)
-          -- stylua: ignore
-          vim.keymap.set( "n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
-          vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
-        end)
-      end,
-    },
-
     config = function()
       local lspconfig = require("lspconfig")
       local lsp_helpers = require("plugins.helpers.lsp-helpers")
@@ -94,9 +83,22 @@ return {
           },
         },
       })
+      local function organize_imports()
+        local params = {
+          command = "_typescript.organizeImports",
+          arguments = { vim.api.nvim_buf_get_name(0) },
+        }
+        vim.lsp.buf.execute_command(params)
+      end
       lspconfig.tsserver.setup({
         capabilities = lsp_helpers.capabilities,
         on_attach = lsp_helpers.on_attach,
+        commands = {
+          OrganizeImports = {
+            organize_imports,
+            desc = "Organize Imports",
+          },
+        },
       })
       lspconfig.astro.setup({
         capabilities = lsp_helpers.capabilities,
