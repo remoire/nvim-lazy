@@ -37,33 +37,15 @@ return {
     "skywind3000/asyncrun.vim", -- async make
     "mattia72/vim-delphi", -- aligning
     "dylanaraps/pascal_lint.nvim", -- linter
+    "vim-scripts/fpc.vim",
     config = function()
       require("vim-delphi").setup()
       require("pascal_list.nvim").setup()
       require("asyncrun.vim").setup()
+      require("fpc.vim").setup()
     end,
   },
 
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "shellcheck",
-        "luacheck",
-        "shfmt",
-        "flake8",
-        "selene",
-        "astro-language-server",
-        "ruff",
-        "shfmt",
-        "tailwindcss-language-server",
-        "typescript-language-server",
-        "css-lsp",
-        "jdtls",
-      },
-    },
-  },
   {
     "neovim/nvim-lspconfig",
     lazy = false,
@@ -80,9 +62,6 @@ return {
 
     config = function()
       local lspconfig = require("lspconfig")
-      local cmp_nvim_lsp = require("cmp_nvim_lsp")
-      local keymap = vim.keymap
-
       local lsp_helpers = require("plugins.helpers.lsp-helpers")
 
       lspconfig.tailwindcss.setup({
@@ -122,6 +101,13 @@ return {
       lspconfig.astro.setup({
         capabilities = lsp_helpers.capabilities,
         on_attach = lsp_helpers.on_attach,
+      })
+      lspconfig.phpactor.setup({
+        capabilities = lsp_helpers.capabilities,
+        on_attach = lsp_helpers.on_attach,
+        on_init = function(client, bufnr)
+          print("hello tsserver")
+        end,
       })
     end,
   },
