@@ -2,72 +2,72 @@ return {
   -- neorg
   { "vhyrro/luarocks.nvim", priority = 1000, config = true },
   -- { "nvim-neorocks/rocks.nvim" },
-  {
-    "nvim-neorg/neorg",
-    lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-    version = "*", -- Pin Neorg to the latest stable release
-
-    enabled = true,
-    ft = "norg",
-    dependencies = { "luarocks.nvim", "nvim-lua/plenary.nvim" },
-    cmd = "Neorg",
-    config = function()
-      require("neorg").setup({
-        load = {
-          ["core.defaults"] = {},
-          ["core.norg.concealer"] = {
-            config = {
-              icons = {
-                heading = {
-                  enabled = true,
-
-                  level_1 = {
-                    enabled = true,
-                    icon = "◉",
-                  },
-                  level_2 = {
-                    enabled = true,
-                    icon = " ○",
-                  },
-                  level_3 = {
-                    enabled = true,
-                    icon = "  ●",
-                  },
-                  level_4 = {
-                    enabled = true,
-                    icon = "   ○",
-                  },
-                },
-              },
-            },
-          },
-          ["core.summary"] = {},
-          ["core.completion"] = {
-            config = {
-              engine = "nvim-cmp",
-              name = "[Norg]",
-            },
-          },
-          ["core.integration.nvim-cmp"] = {},
-          ["core.keybinds"] = {
-            -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
-            config = {
-              default_keybinds = true,
-              neorg_leader = "<Leader><Leader>",
-            },
-          },
-          ["core.norg.dirman"] = {
-            config = {
-              workspaces = {
-                notes = "~/neorg/notes",
-              },
-            },
-            notes,
-          },
-        },
-      })
-    end,
-  },
+  -- {
+  --   "nvim-neorg/neorg",
+  --   lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+  --   version = "*", -- Pin Neorg to the latest stable release
+  --
+  --   enabled = true,
+  --   ft = "norg",
+  --   dependencies = { "luarocks.nvim", "nvim-lua/plenary.nvim" },
+  --   cmd = "Neorg",
+  --   config = function()
+  --     require("neorg").setup({
+  --       load = {
+  --         ["core.defaults"] = {},
+  --         ["core.norg.concealer"] = {
+  --           config = {
+  --             icons = {
+  --               heading = {
+  --                 enabled = true,
+  --
+  --                 level_1 = {
+  --                   enabled = true,
+  --                   icon = "◉",
+  --                 },
+  --                 level_2 = {
+  --                   enabled = true,
+  --                   icon = " ○",
+  --                 },
+  --                 level_3 = {
+  --                   enabled = true,
+  --                   icon = "  ●",
+  --                 },
+  --                 level_4 = {
+  --                   enabled = true,
+  --                   icon = "   ○",
+  --                 },
+  --               },
+  --             },
+  --           },
+  --         },
+  --         ["core.summary"] = {},
+  --         ["core.completion"] = {
+  --           config = {
+  --             engine = "nvim-cmp",
+  --             name = "[Norg]",
+  --           },
+  --         },
+  --         ["core.integration.nvim-cmp"] = {},
+  --         ["core.keybinds"] = {
+  --           -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
+  --           config = {
+  --             default_keybinds = true,
+  --             neorg_leader = "<Leader><Leader>",
+  --           },
+  --         },
+  --         ["core.norg.dirman"] = {
+  --           config = {
+  --             workspaces = {
+  --               notes = "~/neorg/notes",
+  --             },
+  --           },
+  --           notes,
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
 
   -- H1
   -- 1e2718
