@@ -117,6 +117,12 @@ return {
       local actions = require("telescope.actions")
       local fb_actions = require("telescope").extensions.file_browser.actions
 
+      local find_files_with_hidden = function()
+        local action_state = require("telescope.actions.state")
+        local line = action_state.get_current_line()
+        LazyVim.telescope("find_files", { hidden = true, default_text = line })()
+      end
+
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
         wrap_results = true,
         layout_strategy = "horizontal",
@@ -129,6 +135,7 @@ return {
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
             ["<C-j>"] = actions.move_selection_next, -- move to next result
             ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            ["<C-h>"] = find_files_with_hidden,
           },
         },
       })
@@ -141,6 +148,7 @@ return {
             preview_cutoff = 9999,
           },
         },
+        find_files = { hidden = true },
       }
 
       opts.extensions = {
@@ -179,7 +187,82 @@ return {
       telescope.load_extension("file_browser")
     end,
   },
+
+  -- {
+  --   "3rd/image.nvim",
+  -- },
+
   {
-    "3rd/image.nvim",
+    "Vonr/align.nvim",
+    branch = "v2",
+    lazy = true,
+    init = function()
+      local NS = { noremap = true, silent = true }
+
+      -- Aligns to 1 character
+      vim.keymap.set("x", "aa", function()
+        require("align").align_to_char({
+          length = 1,
+        })
+      end, NS)
+
+      -- Aligns to 2 characters with previews
+      vim.keymap.set("x", "ad", function()
+        require("align").align_to_char({
+          preview = true,
+          length = 2,
+        })
+      end, NS)
+
+      -- Aligns to a string with previews
+      vim.keymap.set("x", "aw", function()
+        require("align").align_to_string({
+          preview = true,
+          regex = false,
+        })
+      end, NS)
+
+      -- Aligns to a Vim regex with previews
+      vim.keymap.set("x", "ar", function()
+        require("align").align_to_string({
+          preview = true,
+          regex = true,
+        })
+      end, NS)
+
+      -- Example gawip to align a paragraph to a string with previews
+      vim.keymap.set("n", "gaw", function()
+        local a = require("align")
+        a.operator(a.align_to_string, {
+          regex = false,
+          preview = true,
+        })
+      end, NS)
+
+      -- Example gaaip to align a paragraph to 1 character
+      vim.keymap.set("n", "gaa", function()
+        local a = require("align")
+        a.operator(a.align_to_char)
+      end, NS)
+    end,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          show_hidden_count = true,
+          hide_dotfiles = false,
+          hide_gitignored = true,
+          hide_by_name = {
+            -- '.git',
+            -- '.DS_Store',
+            -- 'thumbs.db',
+          },
+          never_show = {},
+        },
+      },
+    },
   },
 }
