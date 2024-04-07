@@ -1,3 +1,5 @@
+local keymap = vim.keymap.set
+
 return {
   "pmizio/typescript-tools.nvim",
   ft = {

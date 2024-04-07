@@ -11,15 +11,19 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
--- greatest remap ever
 keymap.set("x", "<leader>p", [["_dP]])
-
--- next greatest remap ever : asbjornHaland
 keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 keymap.set("n", "<leader>Y", [["+Y]])
 keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
--- This is going to get me cancelled
+-- keymap.set("n", "<leader>xd", "<cmd>lua vim.")
+keymap.set(
+  "n",
+  "<leader>xd",
+  "<cmd> lua vim.diagnostic.open_float() <CR>",
+  { desc = "Toggle diagnostic floating window" }
+)
+
 keymap.set("i", "<C-c>", "<Esc>")
 
 -- Obsidian
