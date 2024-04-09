@@ -28,6 +28,7 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
+    opts = {},
     config = function(_, opts)
       local lualine = require("lualine")
       lualine.setup({
@@ -36,7 +37,15 @@ return {
         },
         comment_italics = true,
         transparent_background = true,
-        transparent_float_background = true, -- aka pum(popup menu) background
+        transparent_float_background = false, -- aka pum(popup menu) background
+        sections = {
+          lualine_c = {
+            {
+              "filename",
+              path = 1,
+            },
+          },
+        },
       })
     end,
   },
