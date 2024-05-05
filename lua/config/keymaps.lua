@@ -28,3 +28,11 @@ keymap.set("i", "<C-c>", "<Esc>")
 
 -- Obsidian
 keymap.set("n", "<leader>o9", "<cmd>Lazy load obsidian.nvim<cr>", { desc = "Load obsidian.nvim" }) -- load obsidian.nvim from lazy.nvim
+
+keymap.set("n", "<leader>r", ":RunCode<CR>", { noremap = true, silent = false })
+keymap.set("n", "<leader>rf", ":RunFile<CR>", { noremap = true, silent = false })
+keymap.set("n", "<leader>rft", ":RunFile tab<CR>", { noremap = true, silent = false })
+keymap.set("n", "<leader>rp", ":RunProject<CR>", { noremap = true, silent = false })
+keymap.set("n", "<leader>rc", ":RunClose<CR>", { noremap = true, silent = false })
+keymap.set("n", "<leader>crf", ":CRFiletype<CR>", { noremap = true, silent = false })
+keymap.set("n", "<leader>crp", ":CRProjects<CR>", { noremap = true, silent = false })
