@@ -24,7 +24,7 @@ return { "mfussenegger/nvim-jdtls" }, { "mfussenegger/nvim-dap", config = functi
     require("java").setup()
 
     local lspconfig = require("lspconfig")
-    local lsp_helpers = require("plugins.helpers.lsp-helpers")
+    local lsp_helpers = require("plugins.lsp.lsp-helpers")
     lspconfig.jdtls.setup({})
   end,
 }
